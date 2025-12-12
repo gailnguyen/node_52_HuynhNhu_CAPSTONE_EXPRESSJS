@@ -1,0 +1,458 @@
+{
+	"info": {
+		"_postman_id": "5ad782ec-b159-4e81-b282-e5a6dd4b2766",
+		"name": "CAPSTONE_EXPRESS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49186263",
+		"_collection_link": "https://www.postman.com/ngnhu11-7363102/workspace/node-52/collection/49186263-5ad782ec-b159-4e81-b282-e5a6dd4b2766?action=share&source=collection_link&creator=49186263"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"zhangying@gmail.com\",\r\n    \"password\": \"123@\",\r\n    \"fullName\": \"Ying Zhang\",\r\n    \"age\": 42\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/auth/register",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const {data} = pm.response.json()\r",
+									"console.log(data)\r",
+									"pm.globals.set(\"accessToken-capstone\", data.accessToken)\r",
+									"pm.globals.set(\"refreshToken-capstone\", data.refreshToken)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abigail@gmail.com\",\r\n    \"password\": \"123@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/auth/login",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const {data} = pm.response.json()\r",
+									"console.log(data)\r",
+									"pm.globals.set(\"accessToken-capstone\", data.accessToken)\r",
+									"pm.globals.set(\"refreshToken-capstone\", data.refreshToken)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"accessToken\":\"{{accessToken-capstone}}\",\r\n    \"refreshToken\":\"{{refreshToken-capstone}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/auth/refresh-token",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Main Page",
+			"item": [
+				{
+					"name": "Get All Pictures",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/main-page/?page=2&limit=3",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"main-page",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pictures By Name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/main-page/search?name=cat",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"main-page",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "cat"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Detail Page",
+			"item": [
+				{
+					"name": "Get Info By Pic Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/detail-page/1",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"detail-page",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comment By Pic Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/detail-page/1/comments",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"detail-page",
+								"1",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Is-Saved-Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-capstone}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/detail-page/7/is-saved",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"detail-page",
+								"7",
+								"is-saved"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Comment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-capstone}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\": \"Mình mới đi về, đẹp lắm mọi người ạ\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/detail-page/6/comments",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"detail-page",
+								"6",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Usres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/admin/users",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Saved Pic By User Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/admin/users/12/save-pictures",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"admin",
+								"users",
+								"12",
+								"save-pictures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pic By Create User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/admin/users/2/pictures",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"admin",
+								"users",
+								"2",
+								"pictures"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pic By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain_capstone_express}}api/admin/pictures/delete/12",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"admin",
+								"pictures",
+								"delete",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Manage",
+			"item": [
+				{
+					"name": "Update Avatar",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-capstone}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/ngnhu/Pictures/Britin/QUEER-AS-FOLK-randy-harrison-34325971-3548-2377.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/user/post-avatar",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"user",
+								"post-avatar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken-capstone}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fullName\": \"Cung Tuan\",\r\n    \"age\": 18\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain_capstone_express}}api/user/update-info",
+							"host": [
+								"{{domain_capstone_express}}api"
+							],
+							"path": [
+								"user",
+								"update-info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

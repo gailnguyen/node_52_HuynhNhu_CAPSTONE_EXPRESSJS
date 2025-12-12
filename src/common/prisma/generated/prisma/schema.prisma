@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/common/prisma/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique @db.VarChar(255)
+  password String? @db.VarChar(255)
+  fullName String? @db.VarChar(255)
+  age      Int
+  avatar   String? @db.VarChar(255)
+
+  comments Comments[]
+  pictures Pictures[]
+  saves    SavePictures[]
+}
+
+model Pictures {
+  id          Int     @id @default(autoincrement())
+  picName     String  @db.VarChar(255)
+  imgUrl      String  @db.VarChar(500)
+  description String?
+  userId      Int
+
+  user Users @relation(fields: [userId], references: [id])
+
+  comments Comments[]
+  saves    SavePictures[]
+
+  @@index([userId])
+}
+
+model Comments {
+  id        Int      @id @default(autoincrement())
+  comment   String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  userId    Int
+  picId     Int
+
+  user Users    @relation(fields: [userId], references: [id])
+  pic  Pictures @relation(fields: [picId], references: [id])
+}
+
+model SavePictures {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  picId     Int
+  createdAt DateTime @default(now())
+
+  user Users    @relation(fields: [userId], references: [id])
+  pic  Pictures @relation(fields: [picId], references: [id])
+
+  @@unique([userId, picId])
+}
