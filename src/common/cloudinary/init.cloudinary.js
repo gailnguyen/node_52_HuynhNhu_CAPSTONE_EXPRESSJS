@@ -1,9 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
+import { API_KEY, API_SECRET, CLOUD_NAME } from "../constant/app.constant.js";
 
 cloudinary.config({
-  cloud_name: "dvdqndk0b",
-  api_key: "374928148611623",
-  api_secret: "CV6y_XRrwZ9YQ5qvT0cEW7I2awo",
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY,
+  api_secret: API_SECRET,
 });
 
 export default cloudinary;
